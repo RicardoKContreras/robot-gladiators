@@ -14,8 +14,7 @@ var fight = function(enemyName) {
     // Repeat and execute as long as the enemy-robot is alive
     while (playerHealth > 0 && enemyHealth > 0) {
 
-   
-
+        // ask player if they want to skip or fight
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter `FIGHT` or `SKIP` to choose.");
 
          //if player choses to skip
@@ -55,8 +54,6 @@ var fight = function(enemyName) {
         //award player money for winning
         playerMoney = playerMoney + 20;
         break;
-    
-
     } else {
         window.alert(enemyName + " still has " + enemyHealth + " health left.");
     }
@@ -71,7 +68,7 @@ var fight = function(enemyName) {
     //Check Player's health
     if (playerHealth <= 0) {
         window.alert(playerName + " has died!");
-        window.alert("You have lost your robot in battle! Game Over!");
+        
         break;
     
     } else {
@@ -90,24 +87,65 @@ var fight = function(enemyName) {
     // if no (false), ask question again by running fight() again
  
 
+//function to start a new game
+var startGame = function(){
+    //reset player stats
+    playerHealth = 100;
+    playerAttack = 10;
+    playerMoney = 10;
+
+    var endGame = function(){
+        // if player is still alive, player wins!
+        if (playerHealth > 0){
+            window.alert("Great job, you've survived the game! You now have a score of " + playerMoney + " . ");
+        }
+        else {
+            window.alert("You've lost your robot in battle.");
+        }
+    //ask player if they'd like to play again
+    var playeAgainConfirm = window.confirm("Would you like to play again?");
+    
+    if (playeAgainConfirm) {
+        //restart the game
+        startGame();
+    }
+    else {
+        window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+    }
+    }
+
+
 //for loop
 for(var i = 0; i < enemyNames.length; i++) {
     if (playerHealth > 0) {
         //Alert players that they are starting the round
        window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
    
+       //pick new enemy to fight based on the index of the enemyNames array
     var pickedEnemyName = enemyNames[i];
-       enemyHealth = 50;
+      
+    //reset enemyHealth before starting new fight
+    enemyHealth = 50;
        
        
    
        fight(pickedEnemyName);
    
-    } else {
+    }
+     else {
         window.alert("You have lost your robot in battle! Game Over!");
         break;
     }
 }
+// start the game when the page loads
+endGame();
+
+};
+startGame();
+
+//function to end the entire game
+
+
 
 
 
