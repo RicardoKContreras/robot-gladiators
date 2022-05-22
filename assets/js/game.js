@@ -97,8 +97,22 @@ var enemyInfo = [
 
 var fight = function(enemy) {
 
+    //keep track of who goes first
+    var isPlayerTurn = true;
+    
+    //randomly change turn order
+    
+        
+    
+
     // Repeat and execute as long as the enemy-robot is alive
     while (playerInfo.health > 0 && enemy.health > 0) {
+
+        if (Math.random() > 0.5) {
+            isPlayerTurn = false;
+        }
+
+        if (isPlayerTurn){
 
      if (fightOrSkip()) {
          // if true, leave fight by breaking loop
@@ -110,6 +124,7 @@ var fight = function(enemy) {
     //generate random damage value based on player's attack power
     var damage = randomNumber(playerInfo.attack -3, playerInfo.attack);
 
+    //remove enemy's health by subtracting the amount we set in the damage variable
     enemy.health = Math.max(0, enemy.health - damage);
 
     // Log a resulting message to the console so we know that it worked
@@ -121,6 +136,8 @@ var fight = function(enemy) {
 
         //award player money for winning
         playerInfo.money = playerInfo.money + 20;
+        
+        //leave the while() loop since enemy is dead
         break;
     } else {
         window.alert(enemy.name + " still has " + enemy.health + " health left.");
@@ -128,7 +145,10 @@ var fight = function(enemy) {
 
     // Subtract the value of `enemy.attack` from the value of `playerInfo.health` and use that result to update the value in the `playerInfo.health` variable.
     // generate random damage value based on enemy's attack power
+} else {
     var damage = randomNumber(enemy.attack - 3, enemy.attack);
+
+    //remove player's health by subtracting the amount we set in the damage variable
     playerInfo.health = Math.max(0, playerInfo.health - damage);
 
     // Log a resulting message to the console so we know that it worked.
@@ -146,6 +166,10 @@ var fight = function(enemy) {
     
     }
     }
+
+    //switch turn order for next round
+    isPlayerTurn = !isPlayerTurn;
+}
 };
 
 
